@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Aryan Gandhi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #efefef;
+        }
+    
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+    
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #ccc;
+        }
+    
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #c5c9c5;
+        }
+    
+        header p {
+            margin: 5px 0;
+        }
+    
+        .contact-info a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+    
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    
+        h2 {
+            color: #078500;
+            padding: 5px 10px;
+            margin: 20px 0 10px -50px;
+            font-size: 20px;
+            font-weight: 6px;
+        }
+    
+        section {
+            margin-left: 45px;
+            width: 45%
+        }
+    
+        ul {
+            padding-left: 0px;
+            font-size: 18px;
+    
+        }
+    
+        .languages {
+            display: flex;
+            align-items: center;
+        }
+    
+        .languages div {
+            margin-left: 10px;
+        }
+    
+        .languages img {
+            width: 20px;
+            height: 20px;
+        }
+    
+        .name-contact {
+            width: 100%;
+            text-align: left;
+            margin-right: 20px;
+        }
+    
+        .name-contact h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: -20px;
+        }
+    
+        .name-contact p {
+            font-size: 18px;
+            margin-bottom: -5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="spacer" style="height: 50px;"></div>
+    <div class="container">
+        <div class="spacer" style="height: 20px; background-color: rgb(22, 162, 0);"></div>
+        <header>
+            <img src="https://www.iith.ac.in/assets/images/horzlogolong.png" style="float: right; width: 250px; height: auto;">
+            <div class="name-contact">
+                <p style="color: black; font-weight: bold; font-size: 40px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Aryan Gandhi</p>
+                <p style="font-size: 25px; color: rgb(70, 70, 70); margin-bottom: 10px; margin-top: -10px; font-family: Georgia, 'Times New Roman', Times, serif;">Tech Enthusiast</p>
+                <div style="width: 50%;float: right;">
+                <div style="width: 100%; text-align: right;">
+                <p>9723960026</p>
+                <a href="mailto:aryangandhi365@gmail.com">aryangandhi365@gmail.com</a><br>
+                <a href="mailto:me23btech11010@iith.ac.in">me23btech11010@iith.ac.in</a><br>
+                <a href="https://www.linkedin.com/in/aryan-gandhi-64343b2a4/">linkedin.com/in/aryan-gandhi-64343b2a4</a>
+                </div></div>
+                <p style="width: 65%; font-size: 15px;">{{ about_me_data.paragraph }}</p>
+            </div>
+            
+        </header>
+    <div style="float: right; width: 45%; margin-right: 15px;">
+        {% if work %}
+        <section style="width: 100%;">
+            <h2>WORK EXPERIENCE</h2>
+            <ul>
+                {% for work in work %}
+                <li>
+                    <strong>{{ work.name }} - {{ work.company }}</strong><br>
+                    {{ work.position }}<br>
+                    {{ work.duration }}<br>
+                    {{ work.description }}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if projects %}
+        <section style="width: 100%;">
+            <h2>PROJECTS</h2>
+            <ul>
+                {% for project in projects %}
+                <li>
+                    <strong>{{ project.name }} - {{ project.category }}</strong><br>
+                    {{ project.description }}<br>
+                    <a href="{{ project.github_repo }}">GitHub Repository</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </div>
+
+        {% if skills %}
+        <section>
+            <h2>SKILLS</h2>
+            <ul class="skills">
+                {% for skill in skills %}
+                <li><span>{{ skill.name }}</span></li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if pors %}
+        <section>
+            <h2>POINT OF RESPONSIBILITIES</h2>
+            <ul>
+                {% for por in pors %}
+                <li>
+                    <strong>{{ por.name }} - <p style="font-style: italic; font-weight: lighter; display: inline; color: #717171;">{{ por.position }}</p></strong><br>
+                    <p style="margin-top: -7px; margin-bottom: 7px; font-family:Verdana, Geneva, Tahoma, sans-serif;">{{ por.due_date }}</p>
+                    {{ por.description }}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if education_data %}
+        <section>
+            <h2>EDUCATION</h2>
+            <ul>
+                {% for education in education_data %}
+                <li>
+                    <strong>{{ education.institution }}</strong><br>
+                    {{ education.degree }}<br>
+                    {{ education.description }}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if result %}
+        <section>
+            <h2>RESULTS</h2>
+            <ul>
+                {% for result in result|reverse  %}
+                <li>
+                    <strong>{{ result.name }} - {{ result.institution }}</strong><br>
+                    {{ result.Score }}<br>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <section>
+            <h2>LANGUAGES</h2>
+            <div class="languages" style="text-align:left;">
+                <ul>
+                    <li>ENGLISH: ⭐⭐⭐⭐</li>
+                    <li>HINDI: ⭐⭐⭐⭐⭐</li>
+                    <li>GUJARATI: ⭐⭐⭐⭐⭐</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+    <div class="spacer" style="height: 100px;"></div>
+</body>
+</html>

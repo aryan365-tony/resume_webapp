@@ -5,6 +5,7 @@ from sqlalchemy import event
 from flask import send_file
 from io import BytesIO
 import pdfkit
+import os
 
 
 app = Flask(__name__)
@@ -258,7 +259,7 @@ def edit_page():
 
 
 
-config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+#config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
 @app.route('/down-resume', methods=['GET'])
 def resume():
@@ -279,7 +280,9 @@ def resume():
         "enable-local-file-access": "",
         'encoding': "UTF-8",  # Specify the encoding
     }
-    pdf = pdfkit.from_string(htmlFile, False,configuration=config, options=options, )
+    path_wkhtmltopdf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', 'wkhtmltopdf')
+    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+    pdf = pdfkit.from_string(htmlFile, False, options=options, configuration=config)
 
     # Return the PDF as a file
     return send_file(BytesIO(pdf), mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')

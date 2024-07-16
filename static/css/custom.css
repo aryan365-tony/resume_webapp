@@ -1,3 +1,5 @@
+/* Default styles for desktop site */
+
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f5f5f5;
@@ -33,7 +35,6 @@ header:hover {
   font-size: 3rem;
 }
 
-
 .lead {
   overflow-wrap: break-word;
   font-size: 1.5rem;
@@ -64,7 +65,6 @@ nav2 a {
 .fab {
   font-size: 1.5rem;
 }
-
 
 .navbar {
   background-image: linear-gradient(to top, #505050, #000000);
@@ -145,8 +145,6 @@ nav2 a {
   display: block;
 }
 
-
-/* Style the loading animation container */
 .loading-animation {
   position: fixed;
   top: 0;
@@ -162,7 +160,6 @@ nav2 a {
   /* ensure it's on top of the page content */
 }
 
-/* Style the spinner animation */
 .spinner {
   width: 50px;
   height: 50px;
@@ -207,10 +204,9 @@ nav2 a {
   }
 }
 
-/* Hide the page content initially */
 .page-content {
   opacity: 0;
-  visibility: b;
+  visibility: hidden;
 }
 
 section2 {
@@ -248,7 +244,6 @@ section2 {
   transform: translate(-50%, -50%) scale(0);
 }
 
-
 .page-content {
   opacity: 0;
   transition: opacity 1s;
@@ -256,4 +251,35 @@ section2 {
 
 .page-content.visible {
   opacity: 1;
+}
+
+/* Mobile-specific styles */
+@media only screen and (max-width: 768px) {
+  /* Add mobile-specific styles here */
+  header {
+    background-image: linear-gradient(to bottom, #505050, #000);
+    background-size: 100% 200px;
+  }
+
+  section {
+    background-color: #000000;
+    background-size: 100% 200px;
+  }
+
+ .nav-item {
+    margin-right: 10px;
+  }
+
+ .nav-link {
+    font-size: 1.2rem;
+  }
+
+ .info-box {
+    width: 300px;
+  }
+
+ .wipe-layer {
+    width: 200vmin;
+    height: 200vmin;
+  }
 }

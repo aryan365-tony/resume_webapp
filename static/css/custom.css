@@ -71,6 +71,11 @@ nav2 a {
   background-color: #333;
 }
 
+.navbar-toggler-icon {
+  color: #fff; /* or any other visible color */
+  z-index: 1031
+}
+
 .navbar-brand {
   color: #fff;
 }

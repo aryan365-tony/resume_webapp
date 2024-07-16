@@ -1,19 +1,18 @@
-wget http://archive.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_2.0.3-0ubuntu1_amd64.deb
-wget http://archive.ubuntu.com/ubuntu/pool/main/f/fontconfig/libfontconfig1_2.13.1-2ubuntu3_amd64.deb
-wget http://archive.ubuntu.com/ubuntu/pool/main/libx/libxext/libxext6_1.3.4-0ubuntu1_amd64.deb
-wget http://archive.ubuntu.com/ubuntu/pool/main/libx/libxrender/libxrender1_0.9.10-1_amd64.deb
-wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl3_3.0.2-0ubuntu1_amd64.deb
+#!/usr/bin/env bash
 
+# Install Python dependencies
+pip install -r requirements.txt
 
-# Create directories for libraries
-mkdir -p lib
-mkdir -p usr/lib/x86_64-linux-gnu
+# Download the static binary of wkhtmltopdf for Ubuntu Jammy (22.04)
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
 
-# Extract the downloaded packages
-dpkg-deb -x libjpeg-turbo8_2.0.3-0ubuntu1_amd64.deb .
-dpkg-deb -x libfontconfig1_2.13.1-2ubuntu3_amd64.deb .
-dpkg-deb -x libxext6_1.3.4-0ubuntu1_amd64.deb .
-dpkg-deb -x libxrender1_0.9.10-1_amd64.deb .
-dpkg-deb -x libssl3_3.0.2-0ubuntu1_amd64.deb .
+# Extract the executable using ar and tar
+ar x wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+tar -xf data.tar.xz
 
-mv usr/lib/x86_64-linux-gnu/* lib/
+# Create a bin directory if it doesn't exist and move the wkhtmltopdf binary to it
+mkdir -p bin
+mv usr/local/bin/wkhtmltopdf bin/
+
+# Ensure wkhtmltopdf has execute permissions
+chmod +x bin/wkhtmltopdf

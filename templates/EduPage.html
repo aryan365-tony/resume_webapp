@@ -31,7 +31,7 @@
 
     <section class="container-fluid text-light py-5" style="margin-bottom: -30px;">
         {% for education in educations %}
-            <div class="card border-primary mb-3" style="border-radius: 20px; width: 100%; height: 250px; background-color:rgb(29, 29, 29)">
+            <div class="card border-primary mb-3" style="border-radius: 20px; width: 100%; height: auto; background-color:rgb(29, 29, 29)">
                 <div class="row g-0">
                     <div class="col-md-6">
                         <div class="card-header" style="font-size: 40px;">{{ education.institution }}</div>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 d-flex justify-content-end align-items-center">
-                        <img src="{{ education.image_url }}" class="img-fluid" style="border-radius: 20px; max-width: 500px; height: 249px;">
+                        <img src="{{ education.image_url }}" class="img-fluid" style="border-radius: 20px;">
                     </div>
                 </div>
             </div>

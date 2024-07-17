@@ -66,14 +66,14 @@ nav2 a {
   font-size: 1.5rem;
 }
 
+.col-md-6 img{
+  height:100%
+}
+
 .navbar {
   background-image: linear-gradient(to top, #505050, #000000);
   background-color: #333;
-}
-
-.navbar-toggler-icon {
-  color: #fff; /* or any other visible color */
-  z-index: 1031
+  width: 100%
 }
 
 .navbar-brand {
@@ -226,7 +226,6 @@ section2 {
 
 .wipe-container {
   position: relative;
-  overflow: hidden;
 }
 
 .wipe-layer {
@@ -259,18 +258,30 @@ section2 {
 }
 
 /* Mobile-specific styles */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1285px) {
   /* Add mobile-specific styles here */
   header {
     background-image: linear-gradient(to bottom, #505050, #000);
-    background-size: 100% 200px;
+    background-size: 100% 100%;
+  }
+  .navbar {
+    background-image: linear-gradient(to top, #505050, #000000);
+    background-color: #333;
+    width: 100%
+  }
+  .col-md-6 img{
+    width:100%
+  }
+  
+  .navbar-brand {
+    color: #fff;
   }
 
   section {
     background-color: #000000;
-    background-size: 100% 200px;
+    background-size: 100% 100%;
   }
-
+  
  .nav-item {
     margin-right: 10px;
   }
@@ -280,11 +291,25 @@ section2 {
   }
 
  .info-box {
-    width: 300px;
+    visibility: hidden;
   }
 
  .wipe-layer {
     width: 200vmin;
     height: 200vmin;
+  }
+}
+@media (max-width: 1285px) {
+  .nav-item:hover .info-box {
+    visibility: hidden;
+    opacity: 1;
+    max-height: 200px;
+    padding: 20px;
+  
+  }
+  .nav-item:hover .nav-link {
+    background-color: #000000;
+    border-radius: 10px;
+    padding-bottom: 10px;
   }
 }

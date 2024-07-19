@@ -214,13 +214,13 @@ def edit_page():
                 if name:
                     data.name = name
                 if score:
-                    data.score = score
+                    data.Score = score
                 if institution:
                     data.institution = institution
                 if imgURL:
                     data.image_url = imgURL
             else:
-                result = Result(name=name, score=score, institution=institution, image_url=imgURL)
+                result = Result(name=name, Score=score, institution=institution, image_url=imgURL)
                 db.session.add(result)
             db.session.commit()
 

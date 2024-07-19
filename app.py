@@ -8,11 +8,11 @@ import pdfkit
 import os
 
 
-RENDER_POSTGRESQL_USER = 'resume_database_1jv9_user'
-RENDER_POSTGRESQL_PASSWORD = 'l1PwOXzRUA5bXJmMMfdllQir3sljvkTq'
-RENDER_POSTGRESQL_HOST = 'dpg-cqcv7qeehbks73bma0mg-a'
+RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
+RENDER_POSTGRESQL_PASSWORD = '36kQNNYCJ6GhJv2Osx2KbrGu1dy1ABZ3'
+RENDER_POSTGRESQL_HOST = 'dpg-cqd0g33v2p9s73e4tjr0-a'
 RENDER_POSTGRESQL_PORT = 5432
-RENDER_POSTGRESQL_DB_NAME = 'resume_database_1jv9'
+RENDER_POSTGRESQL_DB_NAME = 'resume_database_kzoc'
 
 app = Flask(__name__)
 

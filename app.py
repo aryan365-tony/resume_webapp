@@ -259,6 +259,10 @@ def edit_page():
 
 
     about_me_data=AboutMe.query.first()
+    if about_me_data is None:
+        about_me_data = AboutMe(paragraph='', photo='')
+        db.session.add(about_me_data)
+        db.session.commit()
     education_data = Education.query.all()
     pors=POR.query.all()
     result=Result.query.all()

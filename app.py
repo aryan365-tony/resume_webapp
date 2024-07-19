@@ -342,11 +342,13 @@ def delete_item(table_name, id):
 
 
 class AboutMe(db.Model):
+    __tablename__ = 'about_me'
     id = db.Column(db.Integer, primary_key=True)
     paragraph = db.Column(db.Text, nullable=False)
     photo = db.Column(db.String(100), nullable=True)
 
 class Education(db.Model):
+    __tablename__ = 'education'
     id = db.Column(db.Integer, primary_key=True)
     degree = db.Column(db.String(100), nullable=True)
     institution = db.Column(db.String(100), nullable=False)
@@ -354,6 +356,7 @@ class Education(db.Model):
     image_url = db.Column(db.String(100), nullable=True)
 
 class POR(db.Model):
+    __tablename__ = 'por'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     position = db.Column(db.String(100), nullable=False)
@@ -362,6 +365,7 @@ class POR(db.Model):
     image_url = db.Column(db.String(100), nullable=True)
 
 class Result(db.Model):
+    __tablename__ = 'result'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=True)
     Score = db.Column(db.String(100), nullable=True)
@@ -369,6 +373,7 @@ class Result(db.Model):
     image_url = db.Column(db.String(100), nullable=True)
 
 class Project(db.Model):
+    __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(50), nullable=True)
@@ -377,6 +382,7 @@ class Project(db.Model):
     image_url = db.Column(db.String(100), nullable=True)
 
 class Work(db.Model):
+    __tablename__ = 'work'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(100), nullable=False)
@@ -387,6 +393,7 @@ class Work(db.Model):
     image_url = db.Column(db.String(100), nullable=True)
 
 class Skill(db.Model):
+    __tablename__ = 'skill'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     company = db.Column(db.String(100), nullable=True)

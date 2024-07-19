@@ -20,7 +20,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{RENDER_POSTGRESQL_USER}:{RENDER_POSTGRESQL_PASSWORD}@{RENDER_POSTGRESQL_HOST}:{RENDER_POSTGRESQL_PORT}/{RENDER_POSTGRESQL_DB_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app, dialect='postgresql')
+db = SQLAlchemy(app)
 
 
 @app.route("/")

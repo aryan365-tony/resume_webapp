@@ -286,6 +286,8 @@ def resume():
     skills=Skill.query.all()
     htmlFile=render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
     options = {
+        'zoom': 'scale-to-fit',  # Auto-adjust the zoom level to fit the content
+        'page-count': '1',
         'page-size': 'TABLOID',  # Set the page size to A4
         'margin-top': '0cm',  # Set the top margin to 1cm
         'margin-bottom': '0cm',  # Set the bottom margin to 1cm

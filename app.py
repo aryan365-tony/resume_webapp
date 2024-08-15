@@ -8,6 +8,9 @@ import pdfkit
 import os
 from playwright.sync_api import sync_playwright
 
+os.system('playwright install')
+
+
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
 RENDER_POSTGRESQL_PASSWORD = '36kQNNYCJ6GhJv2Osx2KbrGu1dy1ABZ3'
 RENDER_POSTGRESQL_HOST = 'dpg-cqd0g33v2p9s73e4tjr0-a'

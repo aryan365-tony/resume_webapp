@@ -5,7 +5,7 @@
         "src": "app.py",
         "use": "@vercel/python",
         "config": {
-          "buildCommand": "wget wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb && ar x wkhtmltox_0.12.6-1.bionic_amd64.deb && tar -xf data.tar.xz && mkdir -p bin && mv usr/local/bin/wkhtmltopdf bin/ && chmod +x bin/wkhtmltopdf"
+          "buildCommand": "wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb && ar x wkhtmltox_0.12.6-1.bionic_amd64.deb && tar -xf data.tar.xz && mkdir -p bin && mv usr/local/bin/wkhtmltopdf bin/ && chmod +x bin/wkhtmltopdf"
         }
       }
     ],

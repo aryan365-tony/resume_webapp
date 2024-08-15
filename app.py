@@ -6,7 +6,7 @@ from flask import send_file
 from io import BytesIO
 import pdfkit
 import os
-
+from playwright.sync_api import sync_playwright
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
 RENDER_POSTGRESQL_PASSWORD = '36kQNNYCJ6GhJv2Osx2KbrGu1dy1ABZ3'
@@ -287,20 +287,20 @@ def resume():
     work=Work.query.all()
     skills=Skill.query.all()
     htmlFile=render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
-    options = {
-        'zoom': '0.8',  # Auto-adjust the zoom level to fit the content
-        'page-size': 'TABLOID',  # Set the page size to A4
-        'margin-top': '0cm',  # Set the top margin to 1cm
-        'margin-bottom': '0cm',  # Set the bottom margin to 1cm
-        'margin-left': '0cm',  # Set the left margin to 1cm
-        'margin-right': '0cm',  # Set the right margin to 1cm
-        "enable-local-file-access": "",
-        'encoding': "UTF-8",  # Specify the encoding
-    }
-    os.environ['LD_LIBRARY_PATH'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib')
-    path_wkhtmltopdf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', 'wkhtmltopdf')
-    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-    pdf = pdfkit.from_string(htmlFile, False, options=options, configuration=config)
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        
+        # Set content and wait until the page is fully loaded
+        page.set_content(html_content)
+        page.wait_for_load_state("networkidle")
+        
+        # Generate PDF
+        pdf = page.pdf(format='tabloid',  # Equivalent to 'TABLOID'
+                       print_background=True, 
+                       margin={'top': '0cm', 'bottom': '0cm', 'left': '0cm', 'right': '0cm'})
+        
+        browser.close()
 
     # Return the PDF as a file
     return send_file(BytesIO(pdf), mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')

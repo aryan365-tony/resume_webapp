@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 # Configure the PostgreSQL database connection
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{RENDER_POSTGRESQL_USER}:{RENDER_POSTGRESQL_PASSWORD}@{RENDER_POSTGRESQL_HOST}:{RENDER_POSTGRESQL_PORT}/{RENDER_POSTGRESQL_DB_NAME}"
-app.config["SQLALCHEMY_DATABASE_URI"] = f"postgres://default:9GYxmt7BylqK@ep-broad-voice-a4dmvpb2.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://default:9GYxmt7BylqK@ep-broad-voice-a4dmvpb2.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

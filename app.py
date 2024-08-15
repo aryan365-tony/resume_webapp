@@ -297,7 +297,7 @@ def resume():
         "enable-local-file-access": "",
         'encoding': "UTF-8",  # Specify the encoding
     }
-    os.environ['LD_LIBRARY_PATH'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin')
+    os.environ['LD_LIBRARY_PATH'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib')
     path_wkhtmltopdf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bin', 'wkhtmltopdf')
     config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
     pdf = pdfkit.from_string(htmlFile, False, options=options, configuration=config)

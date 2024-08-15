@@ -12,6 +12,7 @@
         "src": "/(.*)",
         "dest": "app.py"
       }
-    ]
+    ],
+    "buildCommand": "./requirements.sh"
   }
   

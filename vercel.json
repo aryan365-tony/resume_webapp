@@ -5,7 +5,7 @@
         "src": "app.py",
         "use": "@vercel/python",
         "config": {
-          "buildCommand": "chmod +x requirements.sh && sudo apt install -y wkhtmltopdf && sh requirements.sh"
+          "buildCommand": "chmod +x requirements.sh && sudo apt install -y wkhtmltopdf && bash requirements.sh"
         }
       }
     ],

@@ -6,9 +6,9 @@ from flask import send_file
 from io import BytesIO
 import pdfkit
 import os
-from playwright.sync_api import sync_playwright
-
-os.system('playwright install')
+from flask import send_file
+from xhtml2pdf import pisa
+from io import BytesIO
 
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
@@ -293,26 +293,21 @@ def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        from playwright.sync_api import sync_playwright
-        from io import BytesIO
-        from flask import send_file
-        
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)  # Ensure headless mode
-            page = browser.new_page()
+        pdf_buffer = BytesIO()
 
-            page.set_content(html_content)
-            page.wait_for_load_state("networkidle")  # Adjust if necessary
+        # Convert HTML to PDF using xhtml2pdf (pisa)
+        pisa_status = pisa.CreatePDF(BytesIO(html_content.encode('utf-8')), dest=pdf_buffer)
 
-            pdf = page.pdf(format='tabloid', print_background=True, margin={'top': '0cm', 'bottom': '0cm', 'left': '0cm', 'right': '0cm'})
+        if pisa_status.err:
+            return "Error generating PDF", 500
 
-            browser.close()
-
-        return send_file(BytesIO(pdf), mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+        pdf_buffer.seek(0)
+        return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
 
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
+
 
 
 

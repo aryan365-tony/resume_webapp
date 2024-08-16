@@ -16,3 +16,4 @@ Gunicorn
 psycopg2-binary
 xhtml2pdf
 WeasyPrint
+pango

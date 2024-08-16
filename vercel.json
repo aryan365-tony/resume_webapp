@@ -2,8 +2,8 @@
     "version": 2,
     "functions": {
         "convert-to-pdf": {
+            "script": "app/main.py",
             "runtime": "python3.9",
-            "handler": "app.resume",
             "events": [
                 {
                     "http": {

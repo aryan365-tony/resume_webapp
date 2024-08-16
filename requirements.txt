@@ -15,4 +15,4 @@ Werkzeug==3.0.3
 Gunicorn
 psycopg2-binary
 xhtml2pdf
-WeasyPrint
+pyppeteer

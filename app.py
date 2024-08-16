@@ -6,11 +6,8 @@ from flask import send_file
 from io import BytesIO
 import pdfkit
 import os
-from flask import send_file
 from xhtml2pdf import pisa
-from io import BytesIO
-import asyncio
-from pyppeteer import launch
+from weasyprint import HTML
 
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
@@ -283,8 +280,9 @@ def edit_page():
 #config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
 
+
 @app.route('/down-resume', methods=['GET'])
-async def resume():
+def resume():
     about_me_data = AboutMe.query.first()
     education_data = Education.query.all()
     pors = POR.query.all()
@@ -297,14 +295,13 @@ async def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        browser = await launch(headless=True)
-        page = await browser.newPage()
-        await page.setContent(html_content)
-        pdf = await page.pdf(format='A4', printBackground=True)
+        # Convert HTML to PDF using WeasyPrint
+        pdf = HTML(string=html_content).write_pdf()
 
-        await browser.close()
-
+        # Create a BytesIO buffer to send the PDF file
         pdf_buffer = BytesIO(pdf)
+
+        # Return the PDF as an attachment
         return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
 
     except Exception as e:

@@ -438,6 +438,10 @@ update_ids(Work)
 update_ids(Skill)
 
 if __name__=='__main__':
+    with sync_playwright() as p:
+        print("Installing Chromium...")
+        p.chromium.launch(headless=True)  # Launch Chromium to trigger installation
+        print("Chromium installed.")
     app.app_context().push()
     db.create_all()
     app.run(debug=True)

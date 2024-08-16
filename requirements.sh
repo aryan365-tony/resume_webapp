@@ -1,5 +1,7 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 # Install Python dependencies
 pip install -r requirements.txt
-playwright install chromium
+
+yarn install
+yarn playwright install --with-deps
+

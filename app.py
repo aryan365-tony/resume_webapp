@@ -282,31 +282,33 @@ def edit_page():
 
 @app.route('/down-resume', methods=['GET'])
 def resume():
-    about_me_data=AboutMe.query.first()
+    about_me_data = AboutMe.query.first()
     education_data = Education.query.all()
-    pors=POR.query.all()
-    result=Result.query.all()
-    projects=Project.query.all()
-    work=Work.query.all()
-    skills=Skill.query.all()
-    htmlFile=render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        
-        # Set content and wait until the page is fully loaded
-        page.set_content(html_content)
-        page.wait_for_load_state("networkidle")
-        
-        # Generate PDF
-        pdf = page.pdf(format='tabloid',  # Equivalent to 'TABLOID'
-                       print_background=True, 
-                       margin={'top': '0cm', 'bottom': '0cm', 'left': '0cm', 'right': '0cm'})
-        
-        browser.close()
+    pors = POR.query.all()
+    result = Result.query.all()
+    projects = Project.query.all()
+    work = Work.query.all()
+    skills = Skill.query.all()
 
-    # Return the PDF as a file
-    return send_file(BytesIO(pdf), mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+    html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
+
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+
+            page.set_content(html_content)
+            page.wait_for_load_state("networkidle", timeout=10000)  # Add a 10-second timeout
+
+            pdf = page.pdf(format='tabloid', print_background=True, margin={'top': '0cm', 'bottom': '0cm', 'left': '0cm', 'right': '0cm'})
+
+            browser.close()
+
+        return send_file(BytesIO(pdf), mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+
+    except Exception as e:
+        print(f"Error generating PDF: {e}")
+        return "Error generating PDF", 500
 
 
 @app.route('/resume-view', methods=['GET'])

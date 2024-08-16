@@ -279,7 +279,7 @@ def edit_page():
 
 #config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
-
+'''
 
 @app.route('/down-resume', methods=['GET'])
 def resume():
@@ -307,7 +307,34 @@ def resume():
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
+'''
+@app.route('/down-resume', methods=['GET'])
+def resume():
+    about_me_data = AboutMe.query.first()
+    education_data = Education.query.all()
+    pors = POR.query.all()
+    result = Result.query.all()
+    projects = Project.query.all()
+    work = Work.query.all()
+    skills = Skill.query.all()
 
+    html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
+
+    try:
+        pdf_buffer = BytesIO()
+
+        # Convert HTML to PDF using xhtml2pdf (pisa)
+        pisa_status = pisa.CreatePDF(BytesIO(html_content.encode('utf-8')), dest=pdf_buffer)
+
+        if pisa_status.err:
+            return "Error generating PDF", 500
+
+        pdf_buffer.seek(0)
+        return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+
+    except Exception as e:
+        print(f"Error generating PDF: {e}")
+        return "Error generating PDF", 500
 
 
 

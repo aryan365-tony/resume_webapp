@@ -7,8 +7,6 @@ from io import BytesIO
 import pdfkit
 import os
 from xhtml2pdf import pisa
-from weasyprint import HTML
-
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
 RENDER_POSTGRESQL_PASSWORD = '36kQNNYCJ6GhJv2Osx2KbrGu1dy1ABZ3'

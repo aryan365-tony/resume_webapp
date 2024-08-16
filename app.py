@@ -9,6 +9,7 @@ import os
 from flask import send_file
 from xhtml2pdf import pisa
 from io import BytesIO
+from weasyprint import HTML
 
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
@@ -280,6 +281,7 @@ def edit_page():
 
 #config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
+
 @app.route('/down-resume', methods=['GET'])
 def resume():
     about_me_data = AboutMe.query.first()
@@ -290,23 +292,26 @@ def resume():
     work = Work.query.all()
     skills = Skill.query.all()
 
+    # Render the HTML content
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        pdf_buffer = BytesIO()
+        # Convert HTML to PDF using WeasyPrint
+        pdf = HTML(string=html_content).write_pdf()
 
-        # Convert HTML to PDF using xhtml2pdf (pisa)
-        pisa_status = pisa.CreatePDF(BytesIO(html_content.encode('utf-8')), dest=pdf_buffer)
+        # Create a BytesIO buffer to send the PDF file
+        pdf_buffer = BytesIO(pdf)
 
-        if pisa_status.err:
-            return "Error generating PDF", 500
-
-        pdf_buffer.seek(0)
+        # Return the PDF as an attachment
         return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
 
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 
 

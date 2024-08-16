@@ -9,7 +9,8 @@ import os
 from flask import send_file
 from xhtml2pdf import pisa
 from io import BytesIO
-from weasyprint import HTML
+import asyncio
+from pyppeteer import launch
 
 
 RENDER_POSTGRESQL_USER = 'resume_database_kzoc_user'
@@ -283,7 +284,7 @@ def edit_page():
 
 
 @app.route('/down-resume', methods=['GET'])
-def resume():
+async def resume():
     about_me_data = AboutMe.query.first()
     education_data = Education.query.all()
     pors = POR.query.all()
@@ -296,21 +297,19 @@ def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        # Convert HTML to PDF using WeasyPrint
-        pdf = HTML(string=html_content).write_pdf()
+        browser = await launch(headless=True)
+        page = await browser.newPage()
+        await page.setContent(html_content)
+        pdf = await page.pdf(format='A4', printBackground=True)
 
-        # Create a BytesIO buffer to send the PDF file
+        await browser.close()
+
         pdf_buffer = BytesIO(pdf)
-
-        # Return the PDF as an attachment
         return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
 
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 

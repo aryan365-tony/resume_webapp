@@ -2,6 +2,5 @@
 # Install Python dependencies
 pip install -r requirements.txt
 
-yarn install
-yarn playwright install --with-deps
+python -m playwright install chromium --with-deps
 

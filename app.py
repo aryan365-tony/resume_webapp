@@ -293,12 +293,16 @@ def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
+        from playwright.sync_api import sync_playwright
+        from io import BytesIO
+        from flask import send_file
+        
         with sync_playwright() as p:
-            browser = p.chromium.launch()
+            browser = p.chromium.launch(headless=True)  # Ensure headless mode
             page = browser.new_page()
 
             page.set_content(html_content)
-            page.wait_for_load_state("networkidle", timeout=10000)  # Add a 10-second timeout
+            page.wait_for_load_state("networkidle")  # Adjust if necessary
 
             pdf = page.pdf(format='tabloid', print_background=True, margin={'top': '0cm', 'bottom': '0cm', 'left': '0cm', 'right': '0cm'})
 
@@ -309,6 +313,7 @@ def resume():
     except Exception as e:
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
+
 
 
 @app.route('/resume-view', methods=['GET'])

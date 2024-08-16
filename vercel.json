@@ -1,31 +1,21 @@
 {
-    "version": 2,
-    "functions": {
-        "convert-to-pdf": {
-            "script": "app/main.py",
-            "runtime": "python3.9",
-            "events": [
-                {
-                    "http": {
-                        "url": "/down-resume",
-                        "method": "GET"
-                    }
-                }
-            ]
-        }
-    },
-    "builds": [
-      {
-        "src": "app.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "50mb" }
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "app.py"
-      }
-    ]
-  }
-  
+  "version": 2,
+  "functions": {
+    "api/down-resume": {
+      "runtime": "python3.9"
+    }
+  },
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "50mb" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ]
+}

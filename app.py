@@ -304,11 +304,11 @@ def resume():
         # Set request payload
         payload = {
             'document_html': html_content,
-            'apikey': api_key
+            'access_key': api_key  # Corrected parameter name
         }
 
-        # Send request to pdflayer API
-        response = requests.post(api_url, json=payload)
+        # Send request to pdflayer API using GET method
+        response = requests.post(api_url, params=payload)  # Changed from POST to GET
 
         # Log API response
         logging.info(f"API response: {response.text}")
@@ -330,6 +330,7 @@ def resume():
     except Exception as e:
         logging.error(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
+
 '''
 @app.route('/down-resume', methods=['GET'])
 def resume():

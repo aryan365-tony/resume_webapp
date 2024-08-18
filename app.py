@@ -279,6 +279,10 @@ def edit_page():
 #config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 @app.route('/down-resume', methods=['GET'])
 def resume():
     about_me_data = AboutMe.query.first()
@@ -294,17 +298,20 @@ def resume():
 
     try:
         # Set pdflayer API endpoint and API key
-        api_url = f'http://api.pdflayer.com/api/convert ? access_key = 5ede75a502ccf89f416915f16430f441 & document_html = {html_content}'
+        api_url = 'https://api.pdflayer.com/api/convert'
         api_key = '5ede75a502ccf89f416915f16430f441'
 
         # Set request payload
         payload = {
             'document_html': html_content,
-            'access_key': api_key
+            'apikey': api_key
         }
 
         # Send request to pdflayer API
-        response = requests.post(api_url)
+        response = requests.post(api_url, json=payload)
+
+        # Log API response
+        logging.info(f"API response: {response.text}")
 
         # Check if response is successful
         if response.status_code == 200:
@@ -317,11 +324,11 @@ def resume():
             # Return the PDF as an attachment
             return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
         else:
-            print(f"Error generating PDF: {response.text}")
+            logging.error(f"API error: {response.text}")
             return "Error generating PDF", 500
 
     except Exception as e:
-        print(f"Error generating PDF: {e}")
+        logging.error(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
 '''
 @app.route('/down-resume', methods=['GET'])

@@ -304,7 +304,8 @@ def resume():
         # Set request payload
         payload = {
             'html': html_content,
-            'apiKey': api_key
+            'apiKey': api_key,
+            'format':'Tabloid'
         }
 
         # Send request to html2pdf API using POST method

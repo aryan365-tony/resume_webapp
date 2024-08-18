@@ -297,18 +297,18 @@ def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        # Set pdflayer API endpoint and API key
-        api_url = 'https://api.pdflayer.com/api/convert'
-        api_key = '5ede75a502ccf89f416915f16430f441'
+        # Set html2pdf API endpoint and API key
+        api_url = 'https://api.html2pdf.app/v1/generate'
+        api_key = 'QcS61Rx4EHr182R9T8GPfFsC4Oh9Qc2zNuCc8H3G3LeJEfesjxMirel89eVCoB3y'
 
         # Set request payload
         payload = {
-            'document_url': "/templates/resume.html",
-            'access_key': api_key  # Corrected parameter name
+            'html': html_content,
+            'apiKey': api_key
         }
 
-        # Send request to pdflayer API using GET method
-        response = requests.post(api_url, params=payload)  # Changed from POST to GET
+        # Send request to html2pdf API using POST method
+        response = requests.post(api_url, json=payload)
 
         # Log API response
         logging.info(f"API response: {response.text}")

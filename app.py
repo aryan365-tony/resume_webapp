@@ -300,7 +300,7 @@ def resume():
         # Set request payload
         payload = {
             'document_html': html_content,
-            'apikey': api_key
+            'access_key': api_key
         }
 
         # Send request to pdflayer API

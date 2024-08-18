@@ -312,7 +312,7 @@ def resume():
             pdf_data = response.content
 
             # Create a BytesIO buffer to send the PDF file
-            pdf_buffer = BytesIO(pdf_data)
+            pdf_buffer = pdf_data
 
             # Return the PDF as an attachment
             return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')

@@ -294,7 +294,7 @@ def resume():
 
     try:
         # Set pdflayer API endpoint and API key
-        api_url = 'https://api.pdflayer.com/api/convert'
+        api_url = f'http://api.pdflayer.com/api/convert ? access_key = 5ede75a502ccf89f416915f16430f441 & document_html = {html_content}'
         api_key = '5ede75a502ccf89f416915f16430f441'
 
         # Set request payload
@@ -304,7 +304,7 @@ def resume():
         }
 
         # Send request to pdflayer API
-        response = requests.post(api_url, json=payload)
+        response = requests.post(api_url)
 
         # Check if response is successful
         if response.status_code == 200:

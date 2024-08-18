@@ -303,7 +303,7 @@ def resume():
 
         # Set request payload
         payload = {
-            'document_html': html_content = """<!DOCTYPE html><html><body><h1>Hello, World!</h1></body></html>""",
+            'document_html': html_content = "<!DOCTYPE html><html><body><h1>Hello, World!</h1></body></html>",
             'access_key': api_key  # Corrected parameter name
         }
 

@@ -1,10 +1,11 @@
-from flask import Flask,render_template,request,redirect,url_for,flash
+from flask import Flask,render_template,request,redirect,url_for,flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import event
 from flask import send_file
 from io import BytesIO
 import pdfkit
+import requests
 import os
 from xhtml2pdf import pisa
 
@@ -277,7 +278,6 @@ def edit_page():
 
 #config = pdfkit.configuration(wkhtmltopdf='/static/wkhtmltopdf/bin/wkhtmltopdf.exe')
 
-'''
 
 @app.route('/down-resume', methods=['GET'])
 def resume():
@@ -293,14 +293,32 @@ def resume():
     html_content = render_template('resume.html', about_me_data=about_me_data, education_data=education_data, pors=pors, result=result, projects=projects, work=work, skills=skills)
 
     try:
-        # Convert HTML to PDF using WeasyPrint
-        pdf = HTML(string=html_content).write_pdf()
+        # Set pdflayer API endpoint and API key
+        api_url = 'https://api.pdflayer.com/api/convert'
+        api_key = '5ede75a502ccf89f416915f16430f441'
 
-        # Create a BytesIO buffer to send the PDF file
-        pdf_buffer = BytesIO(pdf)
+        # Set request payload
+        payload = {
+            'document_html': html_content,
+            'apikey': api_key
+        }
 
-        # Return the PDF as an attachment
-        return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+        # Send request to pdflayer API
+        response = requests.post(api_url, json=payload)
+
+        # Check if response is successful
+        if response.status_code == 200:
+            # Get PDF data from response
+            pdf_data = response.content
+
+            # Create a BytesIO buffer to send the PDF file
+            pdf_buffer = BytesIO(pdf_data)
+
+            # Return the PDF as an attachment
+            return send_file(pdf_buffer, mimetype='application/pdf', as_attachment=True, download_name='resume.pdf')
+        else:
+            print(f"Error generating PDF: {response.text}")
+            return "Error generating PDF", 500
 
     except Exception as e:
         print(f"Error generating PDF: {e}")
@@ -334,7 +352,7 @@ def resume():
         print(f"Error generating PDF: {e}")
         return "Error generating PDF", 500
 
-
+'''
 
 
 @app.route('/resume-view', methods=['GET'])
